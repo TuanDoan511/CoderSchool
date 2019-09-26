@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BTVN_1</title>
+    <style type="text/css">
+      * {
+        font-family: arial, sans-serif;
+      }
+
+      #main {
+        margin-top: 10%;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 80px;
+      }
+
+      input {
+        font-size: 30px;
+        border-radius: 25px;
+      }
+
+      button {
+        font-size: 30px;
+        border-radius: 25px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="nav-bar"></div>
+    <div id="main">
+      <h1 id="logo">
+        <span style="color: blue">G</span><span style="color: red">o</span
+        ><span style="color: yellow">o</span><span style="color: blue">g</span
+        ><span style="color: green">l</span><span style="color: red">e</span>
+      </h1>
+      <h3 id="given_array"></h3>
+      <input type="number" placeholder="Input number here..." />
+      <br />
+      <button onclick="find_result()">Enter</button>
+      <p id="result">Result will be showed here</p>
+    </div>
+    <script type="text/javascript">
+      var given_array = [1, 2, 5, 9, 45, 23, 3];
+      document.getElementById("given_array").innerHTML =
+        "Array: [ " + given_array + " ]";
+
+      function find_result() {
+        var result = "";
+        var result_count = 0;
+        var input_number = document.getElementsByTagName("input")[0].value;
+        for (var i = 0; i < given_array.length; ++i) {
+          if (given_array[i] > input_number) {
+            continue;
+          } else if (given_array[i] == input_number) {
+            result += "[ " + given_array[i] + " ]<br>";
+            result_count += 1;
+          } else {
+            var sum = 0;
+            var stop_index = get_sum(i, sum, input_number);
+            if (stop_index != -1) {
+              result += "[ ";
+              for (var j = i; j <= stop_index; ++j) {
+                result += given_array[j] + " ";
+              }
+              result += " ]<br>";
+              result_count += 1;
+            }
+          }
+        }
+        result_printer = document.getElementById("result");
+        result_printer.innerHTML =
+          "There is " +
+          result_count +
+          " subarray match the result:<br>" +
+          result;
+      }
+
+      function get_sum(count, sum, input_number) {
+        sum += given_array[count];
+        if (sum == input_number) {
+          return count;
+        } else if (sum > input_number || count >= given_array.length) {
+          return -1;
+        } else {
+          return get_sum(count + 1, sum, input_number);
+        }
+      }
+    </script>
+  </body>
+</html>
